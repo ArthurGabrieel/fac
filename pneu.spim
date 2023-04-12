@@ -1,0 +1,15 @@
+.data:
+    newline:    .asciiz  "\n"
+    diff:       .word    0
+.text
+    main:
+        li		    $v0, 5		# $v0 = 5
+        syscall                 # read input
+        move		$t0, $v0	# $t0 = input
+
+        li		    $v0, 5		# $v0 = 5
+        syscall                 # read input
+        move		$t1, $v0	# $t1 = input
+
+        add		$t0, $t1, $t2		# $t0 = $t1 + $t2
+        

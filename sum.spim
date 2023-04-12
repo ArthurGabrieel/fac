@@ -1,0 +1,27 @@
+.data
+    sum:        .word       0
+    newline:    .asciiz     "\n"
+
+.text
+main:
+        li		    $v0, 5		    # ler inteiro
+        syscall                     # syscall 5
+        move		$t1, $v0		# $t1 = $v0
+
+        li		    $v0, 5		    # ler inteiro
+        syscall                     # syscall 5
+        move		$t2, $v0		# $t2 = $v0
+        
+        add		    $t3, $t1, $t2	# $t3 = $t1 + $t2
+        sw		    $t3, sum		# sum = $t3
+
+        lw		    $a0, sum		# $a0 = sum
+        li		    $v0, 1		    # $v0 = 1
+        syscall
+
+        li		    $v0, 4		    # $v0 = 4 (print string)
+        la		    $a0, newline	# $a0 = endereço da string "\n"
+        syscall
+
+        li		    $v0, 10		    # encerrar programa
+        syscall                     # syscall 10

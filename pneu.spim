@@ -11,10 +11,8 @@
         syscall                     # read input
         move		$t1, $v0	    # $t1 = input
 
-        sub		    $t2, $t0, $t1	# $t0 = $t1 + $t2
-        sw		    $t2, diff		# store $t2 in diff
+        sub		    $a0, $t0, $t1	# $a0 = $t1 - $t2
 
-        lw          $a0, diff		# $t2 = diff
         li		    $v0, 1		    # $v0 = 1
         syscall
 

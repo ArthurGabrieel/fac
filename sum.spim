@@ -12,10 +12,8 @@ main:
         syscall                     # syscall 5
         move		$t2, $v0		# $t2 = $v0
         
-        add		    $t3, $t1, $t2	# $t3 = $t1 + $t2
-        sw		    $t3, sum		# sum = $t3
+        add		    $a0, $t1, $t2	# $a0 = $t1 + $t2
 
-        lw		    $a0, sum		# $a0 = sum
         li		    $v0, 1		    # $v0 = 1
         syscall
 

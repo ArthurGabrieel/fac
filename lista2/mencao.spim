@@ -1,0 +1,67 @@
+.data
+    sr: .asciiz "SR\n"
+    ii: .asciiz "II\n"
+    mi: .asciiz "MI\n"
+    mm: .asciiz "MM\n"
+    ms: .asciiz "MS\n"
+    ss: .asciiz "SS\n"
+.text
+    main:
+        li		$v0, 5		# $v0 = 5
+        syscall			    # read integer from keyboard
+        move	$t0, $v0	# $t0 = $v0
+
+        li        $s0, 30		# $s0 = 30
+        li        $s1, 50		# $s1 = 50
+        li        $s2, 70		# $s3 = 70
+        li        $s3, 90		# $s4 = 90
+
+        beq		$t0, $zero, eqzero	# if $t0 == $zero then goto eqzero      SR
+        blt		$t0, $s0, lt30	    # if $t0 < $s0 then goto lt30           II
+        blt		$t0, $s1, lt50	    # if $t0 < $s1 then goto lt50           MI
+        blt		$t0, $s2, lt70	    # if $t0 < $s2 then goto lt70           MM
+        blt		$t0, $s3, lt90	    # if $t0 < $s3 then goto lt90           MS
+        j		gt90		        # goto gt90                             SS
+
+        eqzero:
+            li		$v0, 4		# $v0 = 4
+            la		$a0, sr		# $a0 = sr
+            syscall			    # print string
+            j		end		    # goto end
+
+        lt30:
+            li		$v0, 4		# $v0 = 4
+            la		$a0, ii		# $a0 = ii
+            syscall			    # print string
+            j		end		    # goto end
+
+        lt50:
+            li		$v0, 4		# $v0 = 4
+            la		$a0, mi		# $a0 = mi
+            syscall			    # print string
+            j		end		    # goto end
+        
+        lt70:
+            li		$v0, 4		# $v0 = 4
+            la		$a0, mm		# $a0 = mm
+            syscall			    # print string
+            j		end		    # goto end
+
+        
+        lt90:
+            li		$v0, 4		# $v0 = 4
+            la		$a0, ms		# $a0 = ms
+            syscall			    # print string
+            j		end		    # goto end
+
+        gt90:
+            li		$v0, 4		# $v0 = 4
+            la		$a0, ss		# $a0 = ss
+            syscall			    # print string
+            j		end		    # goto end
+
+
+        end:
+            li		$v0, 10		# $v0 = 10
+            syscall
+        

@@ -1,0 +1,50 @@
+.data
+    overflow: .asciiz "overflow\n"
+.text
+.globl main
+main:
+    li $v0, 5
+    syscall
+    move $t0, $v0 
+    li $v0, 5
+    syscall
+    move $t1, $v0 
+    li $v0, 5
+    syscall
+    move $t2, $v0 
+
+    addu $t3, $t1, $t2 
+
+    beqz $t0, unsigned 
+
+signed:
+    xor $t4, $t1, $t2 
+    bltz $t4, print_result 
+
+    xor $t4, $t1, $t3 
+    bltz $t4, print_overflow 
+
+print_result:
+    move $a0, $t3
+    li $v0, 1
+    syscall
+    li $v0, 10
+    syscall
+
+unsigned:
+    sltu $t4, $t3, $t1 
+    bnez $t4, print_overflow 
+
+print_result_unsigned:
+    move $a0, $t3
+    li $v0, 1
+    syscall
+    li $v0, 10
+    syscall
+
+print_overflow:
+    la $a0, overflow
+    li $v0, 4
+    syscall
+    li $v0, 10
+    syscall

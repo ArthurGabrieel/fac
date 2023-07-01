@@ -1,0 +1,61 @@
+.data
+    n: .word 0
+    str: .asciiz "%.2d "
+    newline: .asciiz "\n"
+    
+.text
+.globl main
+main:
+    # inicializações
+    li $v0, 5      # lê a entrada do usuário
+    syscall
+    move $t0, $v0  # armazena o valor lido na variável n
+    
+    sw $t0, n      # armazena o valor lido na variável n
+    
+    li $t0, 1      # i = 1
+    
+outer_loop:
+    # verifica se i é maior que n
+    lw $t1, n
+    ble $t0, $t1, inner_loop_exit
+    
+    # inicializações
+    li $t2, 1      # j = 1
+    
+inner_loop:
+    # verifica se j é maior que i
+    ble $t2, $t0, print_next
+    
+    # imprime uma nova linha
+    la $a0, newline
+    li $v0, 4
+    syscall
+    
+    # atualiza o valor de i
+    addi $t0, $t0, 1
+    
+    # volta para o início do loop interno
+    j inner_loop
+    
+print_next:
+    # imprime o valor de i
+    li $v0, 1
+    move $a0, $t0
+    syscall
+    
+    # imprime o espaço em branco
+    la $a0, str
+    li $v0, 4
+    syscall
+    
+    # atualiza o valor de j
+    addi $t2, $t2, 1
+    
+    # volta para o início do loop interno
+    j inner_loop
+    
+inner_loop_exit:
+    # retorna
+    li $v0, 10
+    syscall

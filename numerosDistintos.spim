@@ -1,0 +1,29 @@
+elemDistintos:
+    addi $sp, $sp, -4     # criar espaço na pilha para armazenar o endereço atual
+    sw $ra, 0($sp)        # salvar o endereço de retorno na pilha
+
+    lw $t0, 0($a0)        # carregar o primeiro elemento do vetor
+    addi $t1, $t1, 1     # contador de elementos distintos, inicializado como 1
+
+loop:
+    addi $a1, $a1, -1     # decrementar o contador de elementos
+
+    beqz $a1, fim         # verificar se chegamos ao final do vetor
+    addi $a0, $a0, 4     # avançar para o próximo elemento do vetor
+    lw $t2, 0($a0)        # carregar o próximo elemento do vetor
+
+    bne $t0, $t2, incrementar # comparar os elementos para ver se são distintos
+
+    j loop               # se os elementos forem iguais, continuar no loop
+
+incrementar:
+    addi $t1, $t1, 1     # incrementar o contador de elementos distintos
+    move $t0, $t2        # atualizar o elemento anterior com o elemento atual
+    j loop               # continuar no loop
+
+fim:
+    lw $ra, 0($sp)        # recuperar o endereço de retorno da pilha
+    addi $sp, $sp, 4     # liberar espaço na pilha
+    move $v0, $t1        # armazenar o resultado na variável de retorno
+    jr $ra               # retornar ao chamador
+
